@@ -1,8 +1,12 @@
 name: Build APK
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    
     steps:
       - uses: actions/checkout@v4
       
@@ -11,16 +15,21 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          
-      # Memastikan gradlew punya izin eksekusi
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-        
-      # Build APK
+
+      # Langkah ini akan membuat/memperbaiki akses file Gradle agar bisa di-build
+      - name: Setup Gradle
+        run: |
+          if [ ! -f "gradlew" ]; then
+            echo "gradlew tidak ditemukan, mencoba generate ulang..."
+            gradle wrapper
+          fi
+          chmod +x gradlew
+
+      # Membangun APK
       - name: Build with Gradle
         run: ./gradlew assembleDebug
-        
-      # Upload hasil build ke Artifacts
+
+      # Mengupload hasil APK ke tab Actions
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
