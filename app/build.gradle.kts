@@ -8,30 +8,29 @@ plugins {
 
 android {
   namespace = "com.example"
-  // Disesuaikan untuk kompatibilitas build server
-  compileSdk = 35 
+  
+  // Ditingkatkan ke 36 agar kompatibel dengan library terbaru (core-ktx 1.18.0)
+  compileSdk = 36 
 
   defaultConfig {
     applicationId = "com.aistudio.teleprompter.pqxkzy"
     minSdk = 24
-    targetSdk = 35
+    targetSdk = 36
     versionCode = 1
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
-  // Dihapus: signingConfigs (karena menyebabkan error file tidak ditemukan)
-  
+  // Konfigurasi tanda tangan dihapus agar menggunakan default (tidak mencari file fisik)
   buildTypes {
     release {
       isCrunchPngs = false
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      // Dihapus: signingConfig agar menggunakan default sistem
     }
     debug {
-      // Dihapus: signingConfig agar menggunakan default debug sistem
+      // Menggunakan default agar build tidak gagal mencari file keystore
     }
   }
 
@@ -45,7 +44,9 @@ android {
     buildConfig = true
   }
 
-  testOptions { unitTests { isIncludeAndroidResources = true } }
+  testOptions { 
+    unitTests { isIncludeAndroidResources = true } 
+  }
 }
 
 secrets {
