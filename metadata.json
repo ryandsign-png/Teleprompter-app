@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Teleprompter",
+  "description": "Aplikasi teleprompter dengan kustomisasi kecepatan gulir dan ukuran teks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
